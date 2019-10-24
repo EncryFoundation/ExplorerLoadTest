@@ -18,7 +18,6 @@ class ExplorerSim extends Simulation {
   val scn = scenario("Explorer").exec(Explorer.scenario)
 
   setUp(scn.inject(
-    atOnceUsers(1)
-  )
-    .protocols(httpProtocol))
+    atOnceUsers(100)
+  ).protocols(httpProtocol))
 }
