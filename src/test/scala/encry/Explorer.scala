@@ -50,4 +50,14 @@ object Explorer {
       .exec(visitRandomTrans("transaction")).pause(1 seconds)
   }
 
+  def nodesScenario: ChainBuilder = {
+    exec(
+      http("node list")
+        .get("/node")
+        .check(
+          status is 200
+        )
+    )
+  }
+
 }
