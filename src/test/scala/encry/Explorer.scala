@@ -9,83 +9,24 @@ import scala.concurrent.duration._
 
 object Explorer {
 
-  def getIndex: ChainBuilder = {
+  def transactionsScenario: ChainBuilder = {
     exec(
-      http("Index")
-        .get("/")
-        .check(
-          status is 200
-        )
-    )
-  }
-
-  def getBlocks: ChainBuilder = {
-    exec(
-      http("blocks")
-        .get("/")
-        .check(
-          status is 200
-        )
-    )
-  }
-
-  def getBlock(id: String): ChainBuilder = {
-    exec(
-      http("block")
-        .get(s"/block/$id")
-        .check(
-          status is 200
-        )
-    )
-  }
-
-  def getTrans: ChainBuilder = {
-    exec(
-      http("transactions")
-        .get(s"/transactions?page=0")
+      http("transaction list")
+        .get("/transactions?page=0")
         .check(
           status is 200,
           regex("href=\"/transaction/(.*?)\"").findAll.saveAs("transIds")
         )
     ).pause(500 millis)
-      .exec(visitRandomTrans).pause(1 seconds)
-      .exec(visitRandomTrans).pause(1 seconds)
-
-//      .exec { session =>
-//        println(session)
-//        session
-//      }
+      .exec(visitRandomTrans("unconfTransaction")).pause(1 seconds)
+      .exec(visitRandomTrans("unconfTransaction")).pause(1 seconds)
+      .exec(visitRandomTrans("unconfTransaction")).pause(1 seconds)
   }
 
-  def visitRandomTrans: HttpRequestBuilder = {
-    http("transaction")
+  def visitRandomTrans(name: String): HttpRequestBuilder = {
+    http(name)
       .get("/transaction/${transIds.random()}")
       .check(status is 200)
   }
-
-  def getTrans(id: String): ChainBuilder = {
-    exec(
-      http("transaction")
-        .get(s"/transaction/$id")
-        .check(
-          status is 200
-        )
-    )
-  }
-
-  def getNodes: ChainBuilder = {
-    exec(
-      http("nodes")
-        .get("/node")
-        .check(
-          status is 200
-        )
-    )
-  }
-
-  val scenario =
-    exec(
-      getTrans
-    ).pause(1)
 
 }
