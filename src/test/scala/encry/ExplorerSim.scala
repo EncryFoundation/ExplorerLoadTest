@@ -18,14 +18,7 @@ class ExplorerSim extends Simulation {
   val scn = scenario("Explorer").exec(Explorer.scenario)
 
   setUp(scn.inject(
-    //atOnceUsers(50)
-    constantUsersPerSec(1).during(30 seconds)
-    //rampUsers(1000).during(60 seconds)
-//        .throttle(
-//          reachRps(100) in (10 seconds),
-//          holdFor(1 minute),
-//          jumpToRps(50),
-//          holdFor(2 hours)
+    atOnceUsers(1)
   )
     .protocols(httpProtocol))
 }
