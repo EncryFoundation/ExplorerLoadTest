@@ -29,4 +29,25 @@ object Explorer {
       .check(status is 200)
   }
 
+  def blocksScenario: ChainBuilder = {
+    exec(
+      http("block list")
+        .get(s"/")
+        .check(
+          status is 200,
+          regex("href=\"/block/(.*?)\"").findAll.saveAs("blockIds")
+        )
+    ).pause(1 seconds)
+      .exec(http("block")
+        .get("/block/${blockIds.random()}")
+        .check(
+          status is 200,
+          regex("href=\"/transaction/(.*?)\"").findAll.saveAs("transIds")
+        )
+      ).pause(500 millis)
+      .exec(visitRandomTrans("transaction")).pause(1 seconds)
+      .exec(visitRandomTrans("transaction")).pause(1 seconds)
+      .exec(visitRandomTrans("transaction")).pause(1 seconds)
+  }
+
 }
