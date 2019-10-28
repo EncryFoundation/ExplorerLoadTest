@@ -17,10 +17,10 @@ object Explorer {
           status is 200,
           regex("href=\"/transaction/(.*?)\"").findAll.saveAs("transIds")
         )
-    ).pause(500 millis)
-      .exec(visitRandomTrans("unconfTransaction")).pause(1 seconds)
-      .exec(visitRandomTrans("unconfTransaction")).pause(1 seconds)
-      .exec(visitRandomTrans("unconfTransaction")).pause(1 seconds)
+    ).pause(800 millis, 1000 millis)
+      .exec(visitRandomTrans("unconfTransaction")).pause(800 millis, 1000 millis)
+      .exec(visitRandomTrans("unconfTransaction")).pause(800 millis, 1000 millis)
+      .exec(visitRandomTrans("unconfTransaction")).pause(800 millis, 1000 millis)
   }
 
   def visitRandomTrans(name: String): HttpRequestBuilder = {
@@ -37,17 +37,17 @@ object Explorer {
           status is 200,
           regex("href=\"/block/(.*?)\"").findAll.saveAs("blockIds")
         )
-    ).pause(1 seconds)
+    ).pause(800 millis, 1000 millis)
       .exec(http("block")
         .get("/block/${blockIds.random()}")
         .check(
           status is 200,
           regex("href=\"/transaction/(.*?)\"").findAll.saveAs("transIds")
         )
-      ).pause(500 millis)
-      .exec(visitRandomTrans("transaction")).pause(1 seconds)
-      .exec(visitRandomTrans("transaction")).pause(1 seconds)
-      .exec(visitRandomTrans("transaction")).pause(1 seconds)
+      ).pause(800 millis, 1000 millis)
+      .exec(visitRandomTrans("transaction")).pause(800 millis, 1000 millis)
+      .exec(visitRandomTrans("transaction")).pause(800 millis, 1000 millis)
+      .exec(visitRandomTrans("transaction")).pause(800 millis, 1000 millis)
   }
 
   def nodesScenario: ChainBuilder = {
