@@ -16,7 +16,7 @@ class ExplorerSim extends Simulation {
     .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0")
 
   // A scenario is a chain of requests and pauses
-  val scn = scenario("Explorer").exec(/*Explorer.transactionsScenario,*/ Explorer.blocksScenario/*, Explorer.nodesScenario*/)
+  val scn = scenario("Explorer").exec(Explorer.transactionsScenario, Explorer.blocksScenario, Explorer.nodesScenario)
 
   setUp(scn.inject(
     //atOnceUsers(1)
