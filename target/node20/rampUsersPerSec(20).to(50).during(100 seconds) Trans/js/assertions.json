@@ -1,0 +1,10 @@
+{
+  "simulation": "encry.ExplorerSim",
+  "simulationId": "explorersim",
+  "start": 1572007972115,
+  "description": "",
+  "scenarios": ["Explorer"],
+  "assertions": [
+
+  ]
+}

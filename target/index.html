@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stress Test</title>
+</head>
+<body>
+
+<p>
+    MSI-notebook<br>
+    Intel(R) Core(TM) i5-4210H CPU @ 2.90GHz * 4 core<br>
+    RAM: 8Gb<br>
+    SSD<br>
+    PostgreSQL DB included<br><br>
+
+    CPU load: 100%<br><br>
+
+    Cuncurent users comfortable use: 400 CU<br>
+    Cuncurent users uncomfortable use: 400-500 CU<br><br>
+
+</p>
+
+<a href="./notebook/1 user/index.html" target="_blank">1 user</a><br><br>
+
+<a href="./notebook/rampUsers(1000).during(100 seconds)/index.html" target="_blank">rampUsers(1000).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsers(1500).during(100 seconds)/index.html" target="_blank">rampUsers(1500).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsers(2000).during(100 seconds)/index.html" target="_blank">rampUsers(2000).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsers(3000).during(100 seconds)/index.html" target="_blank">rampUsers(3000).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsersPerSec(10).to(25).during(100 seconds)/index.html" target="_blank">rampUsersPerSec(10).to(25).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsersPerSec(15).to(25).during(100 seconds)/index.html" target="_blank">rampUsersPerSec(15).to(25).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsersPerSec(15).to(30).during(100 seconds)/index.html" target="_blank">rampUsersPerSec(15).to(30).during(100 seconds)</a><br><br>
+
+<a href="./notebook/rampUsersPerSec(20).to(35).during(100 seconds)/index.html" target="_blank">rampUsersPerSec(20).to(35).during(100 seconds)</a><br><br><br>
+
+<a href="./notebook/rampUsers(5000).during(100 seconds) Trans/index.html" target="_blank">rampUsers(5000).during(100 seconds) Transactions only</a><br><br>
+
+<a href="./notebook/rampUsers(8000).during(100 seconds) Trans 5000tx/index.html" target="_blank">rampUsers(8000).during(100 seconds) Transactions only 5000tx</a><br><br>
+
+<a href="./notebook/rampUsers(9000).during(100 seconds) Trans 9000tx/index.html" target="_blank">rampUsers(9000).during(100 seconds) Transactions only 10000tx</a><br><br>
+
+<a href="./notebook/rampUsers(10000).during(100 seconds) Trans 8000tx/index.html" target="_blank">rampUsers(10000).during(100 seconds) Transactions only 8000tx</a><br>
+
+<p>
+    Cuncurent users comfortable use: 800 CU<br>
+    Cuncurent users uncomfortable use: 800-1000 CU<br>
+</p>
+
+<a href="./notebook/rampUsersPerSec(15).to(30).during(100 seconds) Block +/index.html" target="_blank">rampUsersPerSec(15).to(30).during(100 seconds) Blocks only</a><br><br>
+
+<a href="./notebook/rampUsers(3000).during(100 seconds) Block/index.html" target="_blank">rampUsers(3000).during(100 seconds) Blocks only</a><br><br>
+
+<a href="./notebook/rampUsersPerSec(20).to(35).during(100 seconds) Block/index.html" target="_blank">rampUsersPerSec(20).to(35).during(100 seconds) Blocks only</a><br><br>
+
+<p>
+    testnet10: 172.16.11.20<br>
+    Intel(R) Xeon(R) CPU @ 2.10GHz<br>
+    RAM: 4Gb<br>
+    PostgreSQL DB dedicated<br><br>
+
+    CPU load: 30-50%<br><br>
+
+    Cuncurent users comfortable use: 200 CU<br>
+    Cuncurent users uncomfortable use: 200-300 CU<br>
+
+</p>
+
+<a href="./node20/rampUsersPerSec(10).to(15).during(100 seconds)/index.html" target="_blank">rampUsersPerSec(10).to(25).during(100 seconds)</a><br><br>
+
+<a href="./node20/rampUsersPerSec(5).to(10).during(100 seconds)/index.html" target="_blank">rampUsersPerSec(5).to(10).during(100 seconds)</a><br><br><br>
+
+<a href="./node20/rampUsersPerSec(20).to(35).during(100 seconds) Trans/index.html" target="_blank">rampUsersPerSec(20).to(35).during(100 seconds) Transactions only</a><br><br>
+
+<a href="./node20/rampUsersPerSec(20).to(50).during(100 seconds) Trans/index.html" target="_blank">rampUsersPerSec(20).to(50).during(100 seconds) Transactions only</a><br><br>
+
+<a href="./node20/rampUsersPerSec(20).to(80).during(100 seconds) Trans/index.html" target="_blank">rampUsersPerSec(20).to(80).during(100 seconds) Transactions only</a><br><br><br>
+
+<a href="./node20/rampUsersPerSec(5).to(15).during(100 seconds) Block/index.html" target="_blank">rampUsersPerSec(5).to(15).during(100 seconds) Blocks only</a><br><br>
+
+<a href="./node20/rampUsersPerSec(10).to(25).during(100 seconds) Block/index.html" target="_blank">rampUsersPerSec(10).to(25).during(100 seconds) Blocks only</a><br><br>
+
+<p>
+    Оптимизация:<br>
+    Основная нагрузка приходится на БД, инфа из памяти запрашивается в 3-6 раз быстрее чем из базы ( unconfTransaction - из памяти / transaction - из базы )<br>
+    - оптимизировать запрос транзакции из базы (transaction), TransactionsDao.getFullTransaction, сейчас происходит 4 запроса к базе, готовить данные что бы доставать одним запросом.<br>
+    - держать в памяти последних n блоков, для быстрого доступа<br>
+    - сделать paging для транзакций внутри блока<br>
+</p>
+
+---------------------<br><br>
+<a href="https://github.com/EncryFoundation/ExplorerLoadTest" target="_blank">github: Gatling ExplorerLoadTest</a><br><br>
+
+</body>
+</html>
